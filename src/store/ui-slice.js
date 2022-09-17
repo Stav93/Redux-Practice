@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const uiSlice = createSlice({
   name: "ui",
   initialState: { cartisVisible: false },
   reducers: {
-    toggle() {
-      cartisVisible = !state.cartisVisible
+    toggle(state) {
+      state.cartisVisible = !state.cartisVisible
     }
   }
 })
