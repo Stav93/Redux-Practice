@@ -25,7 +25,7 @@ const ProductItem = ({ title, price, description, id }) => {
         <p>{description}</p>
         <div className={classes.actions}>
           <button onClick={addToCartHandler}>Add to Cart</button>
-        </div>
+        </div> 
       </Card>
     </li>
   );
