@@ -16,6 +16,8 @@ function App() {
   const cart = useSelector((state) => state.cart);
   const notification = useSelector((state) => state.ui.notification);
 
+   // using Thunk - we return a function, not an object with a type and payload. with toolkit, redux will see that it is a function and will execute it for us, it will give us the dispatch action automatically, so that we can dispatch again.
+
   //Get cart data from backend
   useEffect(() => {
     dispatch(fetchCartData());
@@ -27,8 +29,9 @@ function App() {
       isInitial = false;
       return;
      }
-    // we return a function, not an object with a type and payload. with toolkit, redux will see that it is a function and will execute it for us, it will give us the dispatch action automatically, so that we can dispatch again.
-    dispatch(sendingCartData(cart))
+    if (cart.changed === true) {
+       dispatch(sendingCartData(cart))
+    }
   }, [cart, dispatch]);
 
   // useEffect(() => {
