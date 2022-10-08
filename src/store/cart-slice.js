@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { uiSliceActions } from "./ui-slice";
 
 const cartSlice = createSlice({
   name: "cart",
@@ -26,10 +27,10 @@ const cartSlice = createSlice({
     },
     removeItem(state, action) {
       const id = action.payload;
-      const existingItem = state.items.find((item) => item.id === id)
+      const existingItem = state.items.find((item) => item.id === id);
       state.totalQuantity--;
       if (existingItem.quantity === 1) {
-        state.items = state.items.filter((item) => item.id !== id)
+        state.items = state.items.filter((item) => item.id !== id);
       } else {
         existingItem.quantity--;
         existingItem.totalPrice = existingItem.totalPrice - existingItem.price;
@@ -37,6 +38,47 @@ const cartSlice = createSlice({
     },
   },
 });
+
+// thunk -> a function that returns a function that will return an action
+export const sendingCartData = (cart) => {
+  return async (dispatch) => {
+    dispatch(
+      uiSliceActions.showNotification({
+        status: "pending",
+        title: "Sending...",
+        message: "Sending Cart Data",
+      })
+    );
+    const sendRequest = async () => {
+      const response = await fetch(
+        "https://react-redux-http-da244-default-rtdb.firebaseio.com/cart.json",
+        { method: "PUT", body: JSON.stringify(cart) }
+      );
+
+      if (!response.ok) {
+        throw new Error("Sending Data Failed");
+      }
+    };
+    try {
+      await sendRequest();
+      dispatch(
+        uiSliceActions.showNotification({
+          status: "success",
+          title: "Success!",
+          message: "Sent Cart Data Successfully!",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        uiSliceActions.showNotification({
+          status: "error",
+          title: "Error!",
+          message: "Sending Cart Data Failed!",
+        })
+      );
+    }
+  };
+};
 
 export const cartSliceActions = cartSlice.actions;
 
