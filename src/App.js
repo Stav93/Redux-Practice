@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { uiSliceActions } from "./store/ui-slice";
-import { sendingCartData } from "./store/cart-slice"
+import { sendingCartData, fetchCartData } from "./store/cart-actions"
 
 import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
@@ -16,6 +16,12 @@ function App() {
   const cart = useSelector((state) => state.cart);
   const notification = useSelector((state) => state.ui.notification);
 
+  //Get cart data from backend
+  useEffect(() => {
+    dispatch(fetchCartData());
+  }, [])
+
+  //Put - update cart data to backend
   useEffect(() => {
      if (isInitial) {
       isInitial = false;
