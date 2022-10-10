@@ -1,16 +1,18 @@
 import { Route } from "react-router-dom";
-import Welcome from "./Welcome";
-import Products from "./Products";
+import Welcome from "./components/Welcome";
+import Products from "./components//Products";
+import MainHeader from "./components/MainHeader";
 
 function App() {
   return (
     <div>
-        <Route path="/welcome">
-          <Welcome />
-        </Route>
-        <Route path="/products">
-          <Products />
-        </Route>
+      <MainHeader/>
+      <Route path="/welcome">
+        <Welcome />
+      </Route>
+      <Route path="/products">
+        <Products />
+      </Route>
     </div>
   );
 }
