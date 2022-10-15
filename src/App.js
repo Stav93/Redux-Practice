@@ -6,13 +6,15 @@ import MainHeader from "./components/MainHeader";
 function App() {
   return (
     <div>
-      <MainHeader/>
+      <MainHeader />
+      <main>
       <Route path="/welcome">
         <Welcome />
       </Route>
       <Route path="/products">
         <Products />
-      </Route>
+        </Route>
+        </main>
     </div>
   );
 }
